@@ -28,6 +28,7 @@
  * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF
  * THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package org.sample;
 
 import org.openjdk.jmh.annotations.Benchmark;
@@ -35,7 +36,8 @@ import org.openjdk.jmh.annotations.BenchmarkMode;
 import org.openjdk.jmh.annotations.Mode;
 import org.openjdk.jmh.annotations.OutputTimeUnit;
 import java.util.concurrent.TimeUnit;
-
+import java.io.*;
+import java.util.ArrayList;
 
 
 
@@ -47,9 +49,23 @@ public class MyBenchmark {
         // Put your benchmark code here.
 
         try {
-            SongDB.Test(10,1,1000);
-        }catch (Exception e){
+		        ArrayList<Integer> arguements = new ArrayList<>();
+        BufferedReader br = new BufferedReader(new FileReader(new File("/home/cchiass2/csc375/Assignment2/Commands.txt")));
+        try {
+            String line;
+            while ((line = br.readLine()) != null) {
+               arguements.add(Integer.parseInt(line));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            br.close();
+        }
+       SongDB.Test(arguements.get(0),arguements.get(1),arguements.get(2));
 
+           // SongDB.Test(10,1,10000);
+        }catch (Exception e){
+		            e.printStackTrace();
         }
     }
 
